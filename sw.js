@@ -1,5 +1,5 @@
 /* Studio ERP service worker: keeps the app working offline */
-var V = 'studio-erp-202611182244';
+var V = 'studio-erp-202611182303';
 var CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(V).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); }));
@@ -16,7 +16,7 @@ self.addEventListener('fetch', function (e) {
   var font = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (url.origin !== location.origin && !font) return;
   if (req.mode === 'navigate') {                            // app page: network first, cache when offline
-    e.respondWith(fetch(req).then(function (r) {
+    e.respondWith(fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }).then(function (r) {
       var cp = r.clone(); caches.open(V).then(function (c) { c.put('index.html', cp); }); return r;
     }).catch(function () { return caches.match('index.html'); }));
     return;
