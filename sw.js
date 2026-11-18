@@ -1,5 +1,5 @@
 /* Studio ERP service worker: keeps the app working offline */
-var V = 'studio-erp-202611180829';
+var V = 'studio-erp-202611182244';
 var CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(V).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); }));
